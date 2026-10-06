@@ -51,6 +51,25 @@ class AuthController extends Controller
             'no_hp' => 'required|numeric',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
+        ], [
+            'nama.required' => 'Nama lengkap wajib diisi.',
+            'alamat.required' => 'Alamat wajib diisi.',
+            'no_ktp.required' => 'No. KTP wajib diisi.',
+            'no_ktp.numeric' => 'No. KTP harus berupa angka.',
+            'no_ktp.digits_between' => 'No. KTP harus 8 sampai 16 digit.',
+            'no_ktp.unique' => 'No. KTP sudah terdaftar.',
+            'no_hp.required' => 'No. HP wajib diisi.',
+            'no_hp.numeric' => 'No. HP harus berupa angka.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'email.unique' => 'Email sudah terdaftar.',
+            'password.required' => 'Password wajib diisi.',
+            'password.min' => 'Password minimal 6 karakter.',
+            'password.confirmed' => 'Konfirmasi password tidak sama.',
+        ], [
+            'nama' => 'nama lengkap',
+            'no_ktp' => 'no KTP',
+            'no_hp' => 'no HP',
         ]);
 
         $lastPasien = User::where('role', 'pasien')->orderByDesc('id')->first();
