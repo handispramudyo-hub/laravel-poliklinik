@@ -1,85 +1,127 @@
 <x-layouts.guest title="Login">
 
-    <div class="w-full max-w-md">
+    <div class="card bg-base-100 shadow-2xl rounded-2xl w-full max-w-[420px]">
+        <div class="card-body my-2 p-[40px]">
 
-        {{-- Card --}}
-        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
+            {{-- Logo & Title --}}
+            <div class="text-center mb-8">
+                <img src="{{ asset('images/logo-bengkot.png') }}"
+                    class="w-[60px] h-[60px] rounded-[16px] object-cover mx-auto mb-[14px] block">
 
-            {{-- Brand header --}}
-            <div class="px-8 pt-9 pb-7 text-center"
-                style="background:linear-gradient(135deg,#1e2d6b 0%,#2d4499 100%);">
-                <div class="mx-auto mb-4 w-16 h-16 rounded-2xl bg-white/15 border border-white/25 flex items-center justify-center">
-                    <i class="fas fa-house-medical text-white text-2xl"></i>
-                </div>
-                <h1 class="brand-serif text-white text-4xl leading-none">Poliklinik</h1>
-                <p class="text-white/70 text-sm mt-2">Sistem Informasi Poliklinik Terpadu</p>
-            </div>
+                <h1 class="text-[1.5rem] font-extrabold text-[#1e2d6b] m-0 mb-[6px]">
+                    Poliklinik
+                </h1>
 
-            <div class="px-8 py-8">
-
-                @if (session('success'))
-                    <div class="alert alert-success mb-4 rounded-xl text-sm">
-                        <i class="fas fa-check-circle"></i>
-                        <span>{{ session('success') }}</span>
-                    </div>
-                @endif
-
-                <h2 class="text-xl font-bold text-slate-800">Selamat Datang</h2>
-                <p class="text-sm text-slate-500 mt-1 mb-6">Silakan masuk menggunakan akun Anda</p>
-
-                <form method="POST" action="{{ route('login') }}" class="space-y-4">
-                    @csrf
-
-                    <div class="space-y-2">
-                        <label class="text-sm font-semibold text-slate-700" for="email">Email</label>
-                        <input id="email" type="email" name="email" value="{{ old('email') }}"
-                            placeholder="nama@poliklinik.test" autocomplete="username"
-                            class="input input-bordered w-full rounded-xl"
-                            style="background:#f8fafc;">
-                        @error('email')
-                            <p class="text-xs text-red-600 font-medium">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div class="space-y-2">
-                        <label class="text-sm font-semibold text-slate-700" for="password">Password</label>
-                        <input id="password" type="password" name="password"
-                            placeholder="••••••••" autocomplete="current-password"
-                            class="input input-bordered w-full rounded-xl"
-                            style="background:#f8fafc;">
-                        @error('password')
-                            <p class="text-xs text-red-600 font-medium">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <button type="submit" class="btn-primary-gradient">
-                        <i class="fas fa-right-to-bracket"></i>
-                        Masuk
-                    </button>
-                </form>
-
-                <div class="divider text-xs text-slate-400">ATAU</div>
-
-                <p class="text-center text-sm text-slate-600">
-                    Belum punya akun?
-                    <a href="{{ route('register') }}" class="font-bold text-indigo-700 hover:underline">
-                        Daftar sebagai Pasien
-                    </a>
+                <p class="text-[0.83rem] text-slate-400 m-0">
+                    Masuk ke akun Anda
                 </p>
-
             </div>
-        </div>
 
-        {{-- Akun demo --}}
-        <div class="mt-5 rounded-xl bg-black/25 backdrop-blur px-5 py-4 text-white text-xs">
-            <p class="font-bold uppercase tracking-widest text-white/60 mb-2">Akun Demo</p>
-            <div class="space-y-1">
-                <p><span class="inline-block w-16 text-white/70">Admin</span> admin@gmail.com / admin</p>
-                <p><span class="inline-block w-16 text-white/70">Dokter</span> dokter@gmail.com / dokter</p>
-                <p><span class="inline-block w-16 text-white/70">Pasien</span> pasien@gmail.com / pasien</p>
+
+            {{-- Success Alert --}}
+            @if (session('success'))
+            <div class="alert alert-success mb-5 rounded-xl text-[0.83rem]">
+                <i class="fas fa-check"></i>
+                <span>{{ session('success') }}</span>
             </div>
-        </div>
+            @endif
 
+
+            {{-- Error Alert --}}
+            @if ($errors->any())
+            <div class="alert alert-error mb-5 rounded-xl text-[0.83rem]">
+                <i class="fas fa-circle-xmark"></i>
+                <span>{{ $errors->first() }}</span>
+            </div>
+            @endif
+
+
+            <form action="{{ route('login') }}" method="POST">
+                @csrf
+
+
+                {{-- Email --}}
+                <div class="form-control mb-4">
+
+                    <label class="label pb-1">
+                        <span class="text-[0.82rem] font-semibold text-gray-700">
+                            Email
+                        </span>
+                    </label>
+
+                    <label class="input input-bordered flex items-center gap-3 rounded-[10px] border-slate-200 bg-slate-50">
+                        <i class="fas fa-envelope text-slate-400 text-[0.82rem]"></i>
+
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="Masukkan email..."
+                            class="grow bg-transparent text-slate-800 text-[0.88rem]" required>
+                    </label>
+
+                </div>
+
+
+                {{-- Password --}}
+                <div class="form-control mb-6">
+
+                    <label class="label pb-1">
+                        <span class="text-[0.82rem] font-semibold text-gray-700">
+                            Password
+                        </span>
+                    </label>
+
+                    <label class="input input-bordered flex items-center gap-3 rounded-[10px] border-slate-200 bg-slate-50">
+                        <i class="fas fa-lock text-slate-400 text-[0.82rem]"></i>
+
+                        <input type="password" name="password" id="password_login" placeholder="Masukkan password..."
+                            class="grow bg-transparent text-slate-800 text-[0.88rem]" required>
+
+                        <i class="fas fa-eye text-slate-400 text-[0.82rem] cursor-pointer" id="toggle_login"
+                            onclick="togglePassword('password_login', 'toggle_login')"></i>
+
+                    </label>
+
+                </div>
+
+
+                {{-- Submit Button --}}
+                <button type="submit" class="btn-primary-gradient mt-6">
+                    <i class="fas fa-right-to-bracket"></i>
+                    Login
+                </button>
+
+            </form>
+
+
+            {{-- Register --}}
+            <p class="text-center mt-5 text-[0.83rem] text-slate-400">
+                Belum punya akun?
+                <a href="{{ route('register') }}" class="text-[#2d4499] font-bold no-underline">
+                    Register
+                </a>
+            </p>
+
+        </div>
     </div>
+
+
+    @push('scripts')
+    <script>
+        function togglePassword(inputId, iconId) {
+
+            const input = document.getElementById(inputId);
+            const icon  = document.getElementById(iconId);
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } 
+            else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+
+        }
+
+    </script>
+    @endpush
 
 </x-layouts.guest>
